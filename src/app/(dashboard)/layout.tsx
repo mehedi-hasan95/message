@@ -10,7 +10,10 @@ import {
 } from "@/components/ui/sidebar";
 import { BreadcrumbSettings } from "./_components/breadcrumb-settings";
 
-const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+type Pros = {
+  children: React.ReactNode;
+};
+const DashboardLayout = async ({ children }: Pros) => {
   const authincated = await onLoginUser();
   if (!authincated) return null;
   return (
