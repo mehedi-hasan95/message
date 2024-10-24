@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import { useClerk } from "@clerk/nextjs";
 
 export const useSidebar = () => {
-  const [expand, setExpand] = useState<boolean | undefined>(undefined);
   const [realtime, setRealtime] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -52,10 +51,7 @@ export const useSidebar = () => {
 
   const { signOut } = useClerk();
   const onSignOut = () => signOut(() => router.push("/"));
-  const onExpand = () => setExpand((prev) => !prev);
   return {
-    expand,
-    onExpand,
     page,
     onSignOut,
     realtime,
