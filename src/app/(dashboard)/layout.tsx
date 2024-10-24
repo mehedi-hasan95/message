@@ -1,15 +1,15 @@
+import { onLoginUser } from "@/actions/auth";
 import { LoginLogout } from "@/components/common/login-logout";
 import { Logo } from "@/components/common/logo";
+import { ChatProvider } from "@/context/use-chat-context";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  const authincated = await onLoginUser();
+  if (!authincated) return null;
   return (
-    <div>
-      <div className="flex justify-between items-center container mx-auto px-6 pt-5">
-        <Logo />
-        <LoginLogout />
-      </div>
-      {children}
-    </div>
+    <ChatProvider>
+      <div className="flex w-full h-screen"></div>
+    </ChatProvider>
   );
 };
 

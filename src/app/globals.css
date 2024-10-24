@@ -12,6 +12,14 @@ body {
   }
 }
 
+.chat-window::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-window {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
