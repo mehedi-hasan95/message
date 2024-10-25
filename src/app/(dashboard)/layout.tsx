@@ -9,6 +9,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { BreadcrumbSettings } from "./_components/breadcrumb-settings";
+import BreadCrumb from "./_components/bread-crumb";
 
 type Pros = {
   children: React.ReactNode;
@@ -29,7 +30,10 @@ const DashboardLayout = async ({ children }: Pros) => {
               <BreadcrumbSettings />
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <BreadCrumb />
+            {children}
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </ChatProvider>

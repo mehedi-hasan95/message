@@ -1,9 +1,11 @@
 import { BillingSettings } from "./_components/billing-settings";
+import { ToggleTheme } from "./_components/toggle-theme";
 
 const SettingsPage = () => {
   return (
-    <div className="overflow-y-auto w-full chat-window flex-1 flex flex-col gap-10 ">
+    <div className="overflow-y-auto w-full">
       <BillingSettings />
+      <ToggleTheme />
     </div>
   );
 };
