@@ -16,10 +16,11 @@ type Pros = {
 const DashboardLayout = async ({ children }: Pros) => {
   const authincated = await onLoginUser();
   if (!authincated) return null;
+
   return (
     <ChatProvider>
       <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar domains={authincated.domains} />
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">

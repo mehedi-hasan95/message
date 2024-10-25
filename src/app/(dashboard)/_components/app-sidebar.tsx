@@ -2,14 +2,18 @@
 
 import {
   AudioWaveform,
+  BookOpen,
+  Bot,
   Command,
   GalleryVerticalEnd,
   GitFork,
   Headset,
   LucideLayoutDashboard,
   Mails,
+  MenuIcon,
   MessageSquareMore,
   Settings2,
+  SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "@/app/(dashboard)/_components/nav-main";
@@ -22,63 +26,24 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useClerk, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { ClosapbleDomain } from "./closapble-domain";
+import { navMain } from "./nav-menus";
 
 // This is sample data.
 
-const data = {
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      name: "Dashboard",
-      url: "/dashboard",
-      icon: LucideLayoutDashboard,
-    },
-    {
-      name: "Conversations",
-      url: "/conversations",
-      icon: MessageSquareMore,
-    },
-    {
-      name: "Integrations",
-      url: "/integrations",
-      icon: GitFork,
-    },
-    {
-      name: "Settings",
-      url: "/settings",
-      icon: Settings2,
-    },
-    {
-      name: "Appointments",
-      url: "/appointments",
-      icon: Headset,
-    },
-    {
-      name: "Email Marketing",
-      url: "/email-marketing",
-      icon: Mails,
-    },
-  ],
+type Props = {
+  domains:
+    | {
+        id: string;
+        name: string;
+        icon: string | null;
+      }[]
+    | null
+    | undefined;
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ domains }: Props) {
   const { user } = useUser();
   const userData = {
     name: user?.firstName || "",
@@ -86,12 +51,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     avatar: user?.imageUrl || "",
   };
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
+    <Sidebar collapsible="icon">
+      <SidebarHeader>{/* <TeamSwitcher teams={data.teams} /> */}</SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
+        <ClosapbleDomain items={domains} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={userData} />
