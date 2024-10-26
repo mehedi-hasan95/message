@@ -45,11 +45,6 @@ export type UserLoginProps = {
   password: string;
 };
 
-export type ChangePasswordProps = {
-  password: string;
-  confirmPassword: string;
-};
-
 export const UserLoginSchema: ZodType<UserLoginProps> = z.object({
   email: z.string().email({ message: "You did not enter a valid email" }),
   password: z
@@ -60,8 +55,9 @@ export const UserLoginSchema: ZodType<UserLoginProps> = z.object({
     }),
 });
 
-export const ChangePasswordSchema: ZodType<ChangePasswordProps> = z
+export const ChangePasswordSchema = z
   .object({
+    currentPasssword: z.string({ message: "Add your current password" }),
     password: z
       .string()
       .min(8, { message: "Your password must be atleast 8 characters long" })

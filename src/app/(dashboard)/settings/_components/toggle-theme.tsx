@@ -18,13 +18,13 @@ export function ToggleTheme() {
       </div>
       <div className="lg:col-span-4">
         <div className="flex gap-10 items-center flex-wrap container mx-auto px-6">
-          <div onClick={() => setTheme("light")} className="cursor-pointer">
+          <div onClick={() => setTheme("system")} className="cursor-pointer">
             <SystemMode />
           </div>
-          <div onClick={() => setTheme("dark")} className="cursor-pointer">
+          <div onClick={() => setTheme("light")} className="cursor-pointer">
             <LightMode />
           </div>
-          <div onClick={() => setTheme("system")} className="cursor-pointer">
+          <div onClick={() => setTheme("dark")} className="cursor-pointer">
             <DarkMode />
           </div>
         </div>

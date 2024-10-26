@@ -49,7 +49,6 @@ export function ClosapbleDomain({
     | null
     | undefined;
 }) {
-  console.log(items);
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Domain</SidebarGroupLabel>

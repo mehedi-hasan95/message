@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { currentUser } from "@clerk/nextjs/server";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 
 export const onGetSubscriptionPlan = async () => {
   try {
@@ -135,6 +135,29 @@ export const onIntegrateDomain = async (domain: string, icon: string) => {
       status: 400,
       message: "Domain already exists",
     };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onUpdatePassword = async (
+  currentPassword: string,
+  password: string
+) => {
+  try {
+    const user = await currentUser();
+    if (!user) return;
+    const verifyPassword = await clerkClient.users.verifyPassword({
+      userId: user.id,
+      password: currentPassword,
+    });
+    if (!verifyPassword)
+      return { status: 422, message: "Current password dosen't match" };
+    const update = await clerkClient.users.updateUser(user.id, { password });
+
+    if (update) {
+      return { status: 200, message: "Password Update" };
+    }
   } catch (error) {
     console.log(error);
   }

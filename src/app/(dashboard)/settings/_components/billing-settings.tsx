@@ -1,6 +1,6 @@
 import { onGetSubscriptionPlan } from "@/actions/settings";
 import { Section } from "./section";
-import { pricingCards } from "@/components/common/pricint-plan";
+import { pricingCards } from "@/components/common/pricing-plan";
 import { ListCheckIcon, Plus } from "lucide-react";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 

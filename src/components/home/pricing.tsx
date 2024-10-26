@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { pricingCards } from "../common/pricint-plan";
+import { pricingCards } from "../common/pricing-plan";
 
 export const Pricing = () => {
   return (
