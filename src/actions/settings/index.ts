@@ -162,3 +162,87 @@ export const onUpdatePassword = async (
     console.log(error);
   }
 };
+
+export const onGetCurrentDomainInfo = async (domain: string) => {
+  const user = await currentUser();
+  if (!user) return;
+  try {
+    const domainInfo = await db.user.findUnique({
+      where: {
+        clerkId: user.id,
+      },
+      select: {
+        subscription: {
+          select: {
+            plan: true,
+          },
+        },
+        domains: {
+          where: {
+            name: `${domain}.com`,
+          },
+          select: {
+            id: true,
+            icon: true,
+            name: true,
+            userId: true,
+            chatBot: {
+              select: {
+                id: true,
+                icon: true,
+                welcomeMessage: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (domainInfo) {
+      return domainInfo;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onUpdateSettings = async (
+  domainId: string | undefined,
+  domainName: string | undefined,
+  img: string | undefined,
+  message: string | undefined
+) => {
+  const user = await currentUser();
+  if (!user) return;
+
+  try {
+    const updateDomain = await db.user.update({
+      where: {
+        clerkId: user.id,
+      },
+      data: {
+        domains: {
+          update: {
+            where: {
+              id: domainId,
+            },
+            data: {
+              name: domainName,
+              chatBot: {
+                update: {
+                  welcomeMessage: message,
+                  icon: img,
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    if (updateDomain) {
+      return { status: 200, message: "Domain update successfully" };
+    }
+    return { status: 400, message: "Something went wrong" };
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -9,6 +9,7 @@ type Props = {};
 const BreadCrumb = (props: Props) => {
   const { chatRoom, onActivateRealTime, page, realtime, loading } =
     useSidebar();
+
   return (
     <div className="flex flex-col ">
       <div className="flex gap-5 items-center">
