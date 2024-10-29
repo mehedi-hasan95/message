@@ -27,16 +27,6 @@ import { AppDrawer } from "./app-drawer";
 import Link from "next/link";
 import Image from "next/image";
 
-type Props = {
-  domains:
-    | {
-        id: string;
-        name: string;
-        icon: string | null;
-      }[]
-    | null
-    | undefined;
-};
 export function ClosapbleDomain({
   items,
 }: {
@@ -81,7 +71,12 @@ export function ClosapbleDomain({
                 {items?.map((domain) => (
                   <SidebarMenuSubItem key={domain.id}>
                     <SidebarMenuSubButton asChild>
-                      <Link href={`/settings/${domain.name.split(".")[0]}`}>
+                      <Link
+                        href={`/settings/${domain.name.slice(
+                          0,
+                          domain.name.lastIndexOf(".")
+                        )}`}
+                      >
                         <Image
                           src={domain.icon || ""}
                           alt="logo"

@@ -28,3 +28,8 @@ export const DomainSettingsSchema = z.object({
     .min(6, "The message must be atleast 6 characters")
     .optional(),
 });
+
+export const HelpDeskSchema = z.object({
+  question: z.string().min(1, { message: "Help Desk question is required" }),
+  answer: z.string().min(1, { message: "Help Desk Answer is required" }),
+});

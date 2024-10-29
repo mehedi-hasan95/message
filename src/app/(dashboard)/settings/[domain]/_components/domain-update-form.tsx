@@ -21,6 +21,7 @@ import { FileUpload } from "@/components/common/file-upload";
 import { onUpdateSettings } from "@/actions/settings";
 import { toast } from "sonner";
 import { LoadingButton } from "@/components/common/loding-button";
+import { useRouter } from "next/navigation";
 
 type Props = {
   id: string;
@@ -30,6 +31,7 @@ type Props = {
 };
 export const DomainUpdateForm = ({ icon, id, name, welcomeMessage }: Props) => {
   const [isLoading, startTransaction] = useTransition();
+  const router = useRouter();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof DomainSettingsSchema>>({
@@ -58,6 +60,7 @@ export const DomainUpdateForm = ({ icon, id, name, welcomeMessage }: Props) => {
               console.log(data?.status === 200 ? "Success" : "Error"),
           },
         });
+        router.refresh();
       });
     });
   }
@@ -117,7 +120,11 @@ export const DomainUpdateForm = ({ icon, id, name, welcomeMessage }: Props) => {
             </FormItem>
           )}
         />
-        {isLoading ? <LoadingButton /> : <Button type="submit">Submit</Button>}
+        {isLoading ? (
+          <LoadingButton />
+        ) : (
+          <Button type="submit">Update Domain</Button>
+        )}
       </form>
     </Form>
   );

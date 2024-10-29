@@ -1,3 +1,5 @@
+import { Headset, LucideIcon, MessageSquareText } from "lucide-react";
+
 type UserRegistrationProps = {
   id: string;
   type: "email" | "text" | "password";
@@ -60,5 +62,21 @@ export const USER_LOGIN_FORM: UserRegistrationProps[] = [
     placeholder: "Password",
     name: "password",
     type: "password",
+  },
+];
+
+type TABS_MENU_PROPS = {
+  label: string;
+  icon?: LucideIcon;
+};
+
+export const HELP_DESK_TABS_MENU: TABS_MENU_PROPS[] = [
+  {
+    label: "helpdesk",
+    icon: MessageSquareText,
+  },
+  {
+    label: "question",
+    icon: Headset,
   },
 ];

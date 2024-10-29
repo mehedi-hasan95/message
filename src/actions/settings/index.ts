@@ -218,6 +218,11 @@ export const onUpdateSettings = async (
     const updateDomain = await db.user.update({
       where: {
         clerkId: user.id,
+        subscription: {
+          plan: {
+            not: "STANDARD",
+          },
+        },
       },
       data: {
         domains: {
@@ -242,6 +247,99 @@ export const onUpdateSettings = async (
       return { status: 200, message: "Domain update successfully" };
     }
     return { status: 400, message: "Something went wrong" };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onDeleteDomain = async (id: string) => {
+  const user = await currentUser();
+  if (!user) return;
+  try {
+    const validateUser = await db.user.findUnique({
+      where: {
+        clerkId: user.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (validateUser) {
+      const validUser = await db.domain.delete({
+        where: {
+          id,
+          userId: validateUser.id,
+        },
+      });
+      if (validUser) {
+        return {
+          status: 200,
+          message: `${validUser.name} delete successfully`,
+        };
+      }
+    }
+    return { status: 400, message: "Something went wrong" };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onHelpDeskQuestion = async (
+  id: string,
+  question: string,
+  answer: string
+) => {
+  const user = await currentUser();
+  if (!user) return;
+  try {
+    const helpDesk = await db.domain.update({
+      where: {
+        id,
+      },
+      data: {
+        helpdesk: {
+          create: {
+            question,
+            answer,
+          },
+        },
+      },
+      include: {
+        helpdesk: {
+          select: {
+            id: true,
+            answer: true,
+            question: true,
+          },
+        },
+      },
+    });
+    if (helpDesk) {
+      return { status: 200, message: "Helpdesk add successfully" };
+    }
+    return { status: 400, message: "Something went wrong" };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onGetHelpDeskQuestion = async (id: string) => {
+  const user = await currentUser();
+  if (!user) return;
+
+  try {
+    const helpDesk = await db.helpDesk.findMany({
+      where: {
+        domainId: id,
+      },
+      select: {
+        answer: true,
+        question: true,
+        id: true,
+      },
+    });
+    return { helpDesk };
   } catch (error) {
     console.log(error);
   }
