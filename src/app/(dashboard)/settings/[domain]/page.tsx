@@ -15,6 +15,10 @@ const DomainUpdateForm = dynamic(
     ),
   { ssr: false }
 );
+const HelpDeskData = dynamic(
+  () => import("./_components/bot/help-desk").then((data) => data.HelpDesk),
+  { ssr: true }
+);
 
 interface Props {
   params: { domain: string };
@@ -62,7 +66,7 @@ const DomainPage = async ({ params }: Props) => {
           <Section label="Train your bot" message="Your bot and faq question" />
         </div>
         <div className="lg:col-span-4">
-          <HelpDesk id={domain?.domains[0]?.id} />
+          <HelpDeskData id={domain?.domains[0]?.id} />
         </div>
       </div>
     </>

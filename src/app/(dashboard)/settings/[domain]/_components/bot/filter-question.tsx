@@ -1,36 +1,35 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { HelpDeskForm } from "./help-desk-form";
-import { onGetHelpDeskQuestion } from "@/actions/settings";
+import { onGetFilterQuestion } from "@/actions/settings";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { FilterQuestionForm } from "./filter-question-form";
 
 type Props = {
   id: string;
 };
-export const HelpDeskContent = async ({ id }: Props) => {
-  const data = await onGetHelpDeskQuestion(id);
-
+export const FilterQuestion = async ({ id }: Props) => {
+  const data = await onGetFilterQuestion(id);
   return (
     <Card className="w-full grid grid-cols-1 lg:grid-cols-2">
       <CardContent className="p-6 border-r-[1px]">
-        <HelpDeskForm id={id} />
+        <FilterQuestionForm id={id} />
       </CardContent>
       <CardContent className="p-6 overflow-y-auto chat-window">
-        {data?.helpDesk.length ? (
+        {data?.filterQuestion.length ? (
           <Accordion type="single" collapsible className="w-full">
-            {data.helpDesk.map((item) => (
+            {data.filterQuestion.map((item) => (
               <AccordionItem key={item.id} value={item.id}>
                 <AccordionTrigger>{item.question}</AccordionTrigger>
-                <AccordionContent>{item.answer}</AccordionContent>
+                <AccordionContent>{item.answered}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         ) : (
-          <CardContent>No help desk question added</CardContent>
+          <CardContent>No filter question added</CardContent>
         )}
       </CardContent>
     </Card>

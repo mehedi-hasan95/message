@@ -33,3 +33,10 @@ export const HelpDeskSchema = z.object({
   question: z.string().min(1, { message: "Help Desk question is required" }),
   answer: z.string().min(1, { message: "Help Desk Answer is required" }),
 });
+
+export const FilterQuestionSchema = z.object({
+  question: z.string().min(2, {
+    message: "Question must be at least 2 characters.",
+  }),
+  answer: z.string().optional(),
+});

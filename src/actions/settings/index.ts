@@ -1,7 +1,9 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { FilterQuestionSchema } from "@/schemas/settings.schema";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import { z } from "zod";
 
 export const onGetSubscriptionPlan = async () => {
   try {
@@ -340,6 +342,65 @@ export const onGetHelpDeskQuestion = async (id: string) => {
       },
     });
     return { helpDesk };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onFilterQuestion = async (
+  id: string,
+  values: z.infer<typeof FilterQuestionSchema>
+) => {
+  const user = await currentUser();
+  if (!user) return;
+  try {
+    const filterQuestion = await db.domain.update({
+      where: {
+        id,
+      },
+      data: {
+        filterQuestions: {
+          create: {
+            question: values.question,
+            answered: values.answer,
+          },
+        },
+      },
+      include: {
+        filterQuestions: {
+          select: {
+            id: true,
+            answered: true,
+            question: true,
+          },
+        },
+      },
+    });
+    if (filterQuestion) {
+      return { status: 200, message: "Filter Question add successfully" };
+    }
+    return { status: 400, message: "Something went wrong" };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onGetFilterQuestion = async (id: string) => {
+  const user = await currentUser();
+  if (!user) return;
+
+  try {
+    const filterQuestion = await db.filterQuestions.findMany({
+      where: {
+        domainId: id,
+      },
+      select: {
+        answered: true,
+        question: true,
+        id: true,
+      },
+    });
+    return { filterQuestion };
   } catch (error) {
     console.log(error);
   }
