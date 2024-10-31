@@ -1,4 +1,12 @@
-import { Headset, LucideIcon, MessageSquareText } from "lucide-react";
+import {
+  Clock3,
+  Headset,
+  LucideIcon,
+  MailMinus,
+  MailPlus,
+  MessageSquareText,
+  Star,
+} from "lucide-react";
 
 type UserRegistrationProps = {
   id: string;
@@ -78,5 +86,23 @@ export const HELP_DESK_TABS_MENU: TABS_MENU_PROPS[] = [
   {
     label: "question",
     icon: Headset,
+  },
+];
+export const TABS_MENU: TABS_MENU_PROPS[] = [
+  {
+    label: "unread",
+    icon: MailMinus,
+  },
+  {
+    label: "all",
+    icon: MailPlus,
+  },
+  {
+    label: "expired",
+    icon: Clock3,
+  },
+  {
+    label: "Stred",
+    icon: Star,
   },
 ];
